@@ -1,8 +1,11 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import './App.css';
+import queryString from 'query-string'
 
 const parties = [
   {
+    key : "psoe",
     party : "PSOE",
     default : true,
     ideology : 1,
@@ -13,6 +16,7 @@ const parties = [
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Logotipo_del_PSOE.svg/80px-Logotipo_del_PSOE.svg.png"
   },
   {
+    key : "pp",
     party : "PP",
     default: false,
     ideology : 8,
@@ -23,6 +27,7 @@ const parties = [
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/PP_icono_2019.svg/80px-PP_icono_2019.svg.png"
   },
   {
+    key : "cs",
     party : "Ciudadanos",
     default: false,
     ideology : 7,
@@ -33,6 +38,7 @@ const parties = [
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Ciudadanos_icono_2017.svg/80px-Ciudadanos_icono_2017.svg.png"
   },
   {
+    key : "up",
     party : "Unidas Podemos",
     default: true,
     ideology : 2,
@@ -43,6 +49,7 @@ const parties = [
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/UPsimbol.svg/80px-UPsimbol.svg.png"
   },
   {
+    key : "vox",
     party : "VOX",
     default: true,
     ideology : 9,
@@ -53,6 +60,7 @@ const parties = [
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/VOX_logo.svg/80px-VOX_logo.svg.png"
   },
   {
+    key : "erc",
     party : "ERC-SOBIRANISTES",
     default: true,
     ideology : 4,
@@ -63,6 +71,7 @@ const parties = [
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Esquerra_Republicana_de_Catalunya-Sobiranistes_icono.svg/80px-Esquerra_Republicana_de_Catalunya-Sobiranistes_icono.svg.png"
   },
   {
+    key : "jx",
     party : "JxCAT-JUNTS",
     default: true,
     ideology : 5,
@@ -73,6 +82,7 @@ const parties = [
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Junts_per_Catalunya.svg/48px-Junts_per_Catalunya.svg.png"
   },
   {
+    key : "pnv",
     party : "EAJ-PNV",
     default: true,
     ideology : 6,
@@ -83,6 +93,7 @@ const parties = [
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/EAJlogo.svg/60px-EAJlogo.svg.png"
   },
   {
+    key : "ehb",
     party : "EH Bildu",
     default: true,
     ideology : 3,
@@ -93,6 +104,7 @@ const parties = [
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/EHBilduLogoa2.png/44px-EHBilduLogoa2.png"
   },
   {
+    key : "ns",
     party : "Navarra Suma",
     default: true,
     ideology : 6,
@@ -103,6 +115,7 @@ const parties = [
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Logo_Navarra_Suma.png/47px-Logo_Navarra_Suma.png"
   },
   {
+    key : "cc",
     party : "Coalición Canaria",
     default: true,
     ideology : 6,
@@ -113,6 +126,7 @@ const parties = [
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Coalici%C3%B3n_Canaria.svg/45px-Coalici%C3%B3n_Canaria.svg.png"
   },
   {
+    key : "com",
     party : "Compromís",
     default: true,
     ideology : 2,
@@ -123,6 +137,7 @@ const parties = [
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Comprom%C3%ADs_%28isotip%29.svg/39px-Comprom%C3%ADs_%28isotip%29.svg.png"
   },
   {
+    key : "prc",
     party : "PRC",
     default: true,
     ideology : 4,
@@ -173,7 +188,6 @@ class Seat extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      active : false,
       hovered : false
     }
     this.mouseEnter = this.mouseEnter.bind(this)
@@ -182,14 +196,12 @@ class Seat extends React.Component {
 
   mouseEnter() {
     this.setState({
-      active : true,
       hovered : true
     })
   }
 
   mouseLeave() {
     this.setState({
-      active : false,
       hovered : false
     })
   }
@@ -208,7 +220,7 @@ class Seat extends React.Component {
       display : this.state.hovered ? "inline-block" : "none"
     }
 
-    const seatClass = "seat" + (this.state.active ? " heartBeat" : "")
+    const seatClass = "seat" + (this.props.active ? " heartBeat" : "")
 
     let seat = <></>
 
@@ -373,7 +385,6 @@ class Switch extends React.Component {
 
     const styleBtn = {
       borderColor : this.props.color,
-      backgroundColor : "white",
       backgroundImage : "url(" + this.props.logo + ")",
       transition: "left 0.7s"
     }
@@ -388,9 +399,9 @@ class Switch extends React.Component {
 
     return(
       <div style = {style} className = "switch">
-        <div className = "switch-section" onClick = {() => this.props.switchFunc(this.props.party, true)} />
-        <div className = "switch-section" onClick = {() => this.props.switchFunc(this.props.party, null)} />
-        <div className = "switch-section" onClick = {() => this.props.switchFunc(this.props.party, false)} />
+        <div className = "switch-section" onClick = {() => this.props.switchFunc(this.props.party, this.props.position === true ? null : true)} />
+        <div className = "switch-section" onClick = {() => this.props.switchFunc(this.props.party, this.props.position == null ? true : null)} />
+        <div className = "switch-section" onClick = {() => this.props.switchFunc(this.props.party, this.props.position == false ? null : false)} />
         <span className = "switch-label">{this.props.party + this.props.seats}</span>
         <div style = {styleBtn} className = "switch-btn" />
       </div>
@@ -401,7 +412,73 @@ class Switch extends React.Component {
 class Button extends React.Component {
   render() {
     return(
-      <button className = "grey-btn" onClick = {() => this.props.func(null)}><i className = {this.props.icon} /> {this.props.label}</button>
+      <button className = "grey-btn" onClick = {() => this.props.func(null)} style = {{display: this.props.show ? "block" : "none"}}><i className = {this.props.icon} /> {this.props.label}</button>
+    )
+  }
+}
+
+class Sector extends React.Component {
+  render() {
+
+    return(
+        <div className={"votes votes-" + this.props.vote} style = {{clipPath: "polygon(50% 50%, " + this.props.range.end.h + " " + this.props.range.end.v + " , 50% -10000%, " + this.props.range.start.h + " " + this.props.range.start.v + " )"}} />
+    )
+  }
+
+}
+
+class Majorities extends React.Component {
+  render() {
+    const props = [this.props.yes, this.props.neutral, this.props.no]
+    const total = props.reduce((a,b) => a+b)
+    const angles = props.map((x, i) => Math.PI * x / total)
+    const endAngles = angles.map( (a, i, v) => Math.PI - v.slice(0, i + 1).reduce( (x, y) => x + y) )
+
+    let ranges = {
+      t : {
+        start : {
+          v : "50%",
+          h : "0"
+        },
+        end : {
+          v : 50 * (1 - 2*Math.sin(endAngles[0])) + "%",
+          h : 50 * (1 + 2*Math.cos(endAngles[0])) + "%"
+        }
+      },
+      n : {
+        end : {
+          v : 50 * (1 - 2*Math.sin(endAngles[1])) + "%",
+          h : 50 * (1 + 2*Math.cos(endAngles[1])) + "%"
+        }
+      },
+      f : {
+        end : {
+          v : "50%",
+          h : "100%",
+        }
+      }
+    }
+
+    const majAbs = total % 2 === 0 ? total / 2 + 1 : Math.floor(total / 2) + 1
+    const majSim = props[2] + 1
+
+    const majSimpleRot = {
+      display: majSim >= majAbs || props[0] >= majAbs ? "none" : "inline-block",
+      transform: "translateY(-50%) rotate(" + -Math.PI * (1 - majSim / total) + "rad)"
+    }
+
+    const majAbsRot = {
+      transform: "translateY(-50%) rotate(" + -Math.PI * (1 - majAbs / total) + "rad)"
+    }
+    return(
+      <div className="parliament">
+        <div className = "maj-center" />
+        <div className = "maj simple" style = {majSimpleRot}><span><span className = "maj-check" style = {{opacity: props[0] >= majSim ? 1 : 0}}>✅</span>{"May. simple (" + majSim + ")"}</span></div>
+        <div className = "maj abs" style = {majAbsRot}><span><span className = "maj-check" style = {{opacity: props[0] >= majAbs ? 1 : 0}}>✅</span>{"May. absoluta (" + majAbs + ")"}</span></div>
+        <Sector vote = "true" range = {ranges.t} midAng = {Math.PI - angles[0]*.5} label = {"Sí (" + props[0]  + ")"} showLabel = {props[0] > 0} />
+        <Sector vote = "neutral" range = {{start : ranges.t.end, end : ranges.n.end}} midAng = {Math.PI - angles[0] - angles[1]*.5} label = {"Abstención (" + props[1]  + ")"} showLabel = {props[1] > 0} />
+        <Sector vote = "false" range = {{start : ranges.n.end, end : ranges.f.end}} midAng = {Math.PI - angles[0] - angles[1] - angles[2]*.5} label = {"No (" + props[2]  + ")"} showLabel = {props[2] > 0} />
+      </div>
     )
   }
 }
@@ -411,8 +488,19 @@ class App extends React.Component {
   constructor(props) {
     super(props);
 
+    const query = queryString.parse(this.props.location.search)
+
+    let initialParties = Array.from(parties)
+
+    for(let i = 0; i < initialParties.length; i++) {
+
+      if(Object.keys(query).includes(initialParties[i].key)) {
+        initialParties[i].vote = query[initialParties[i].key] == 1 ? true : (query[initialParties[i].key] == 0 ? false : null)
+      }
+    }
+
     this.state = {
-      parties : parties
+      parties : initialParties
     }
 
     this.changeVote = this.changeVote.bind(this)
@@ -433,15 +521,27 @@ class App extends React.Component {
     this.setState({
       parties: p
     })
+
+    let currentUrlParams = new URLSearchParams(window.location.search)
+    if(vote == null) {
+      currentUrlParams.delete(p[i].key)
+    } else {
+      currentUrlParams.set(p[i].key, vote ? 1 : 0)
+    }
+    this.props.history.push(window.location.pathname + "?" + currentUrlParams.toString())
   }
 
   changeAllVotes(vote) {
     let p = Array.from(this.state.parties)
+    let currentUrlParams = new URLSearchParams(window.location.search)
 
     for(let j = 0; j < p.length; j++) {
       p[j].active = p[j].vote !== vote ? true : false
       p[j].vote = vote
+      currentUrlParams.delete(p[j].key)
     }
+
+    this.props.history.push(window.location.pathname + "?" + currentUrlParams.toString())
 
     this.setState({
       parties: p
@@ -451,6 +551,8 @@ class App extends React.Component {
   render() {
 
     const switches = this.state.parties.map((o, i) => <Switch key = {i} party = {o.party} seats = {" (" + o.seats + ")"} switchFunc = {this.changeVote} color = {o.color} position = {o.vote} logo = {o.logo} />)
+    const votes = [true, false, null].map(x => this.state.parties.filter(y => y.vote == x).map(o => o.seats).reduce( (a, b) => a + b, 0) )
+
 
     return(
       <>
@@ -464,11 +566,17 @@ class App extends React.Component {
           </div>
           {switches}
         </div>
-        <div className = "col-lg-4 col-sm-12 parl">
-          <Parliament seats = {350} rows = {10} parties = {this.state.parties} switchFunc = {this.changeVote} />
-        </div>
-        <div className = "col-lg-3 col-sm-12">
-          <Button func = {this.changeAllVotes} label = "Reiniciar" icon = "fas fa-undo" />
+        <div className = "col-lg-6 col-sm-12">
+          <div className = "row">
+            <div className = "col-lg-6 col-sm-12 button-middle">
+              <Button show = {votes[0] + votes[1] > 0} func = {this.changeAllVotes} label = "Reiniciar" icon = "fas fa-undo" />
+              <Majorities yes = {votes[0]} no =  {votes[1]} neutral =  {votes[2]} />
+            </div>
+            <div className = "col-lg-6 col-sm-12 column-up">
+              <Parliament seats = {350} rows = {10} parties = {this.state.parties} switchFunc = {this.changeVote} />
+            </div>
+          </div>
+
         </div>
       </div>
       </>
