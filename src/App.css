@@ -77,8 +77,9 @@ body {
 .maj {
   position: absolute;
   top: 50%;
-  left: calc(50% + .5vw);
+  left: 50%;
   width: 55%;
+  height: 0;
   border-style: none;
   border-color: white;
   border-width: 2.5px;
@@ -154,6 +155,10 @@ body {
   text-transform: uppercase;
 }
 
+button i, a i {
+  margin-right: 5px;
+}
+
 .switch-header span {
   position: absolute;
   transform: translateX(-50%);
@@ -161,7 +166,7 @@ body {
 }
 
 .switch-header span:nth-child(1) {
-  left: 0;
+  left: 20px;
 }
 
 .switch-header span:nth-child(2) {
@@ -169,22 +174,47 @@ body {
 }
 
 .switch-header span:nth-child(3) {
-  left: 100%;
+  left: calc(100% - 20px);
 }
 
 .switch-btn {
-  position: absolute;
-  left: 50%;
   border-style: solid;
   border-width: 2px;
   border-radius: 50%;
   height: 40px;
   width: 40px;
-  transform: translate(-50%, -17.5px);
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
   background-color: white;
+}
+
+.tool-tip .switch-btn {
+  display: inline-block;
+  margin: 10px;
+}
+
+.switch .switch-btn {
+  position: absolute;
+  left: calc(50% - 20px);
+  margin-top: -20px;
+}
+
+.tool-tip {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 150%;
+  display: none;
+  background-color: rgb(0, 0, 0, 0.7);
+  color: white;
+  border-radius: 5px;
+  transform: translate(-50%, -110%);
+  z-index: 10;
+}
+
+div:hover > .tool-tip {
+  display: inline-block;
 }
 
 .switch-label {
@@ -240,10 +270,10 @@ body {
 .maj-center {
   background-color: white;
   border-radius: 50%;
-  height: 9.28vw;
-  width: 9.28vw;
+  height: 33%;
+  width: 33%;
   position: absolute;
-  left: calc(50% + .5vw);
+  left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   z-index: 3;
@@ -266,7 +296,7 @@ body {
   background-color: #e0e0e0;
 }
 
-.button-middle .grey-btn {
+.button-middle > .grey-btn {
   position: absolute;
   left: 100%;
   transform: translateX(-50%);
@@ -281,10 +311,241 @@ body {
   margin-left: 15px;
 }
 
+.count {
+  position: relative;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: -8vw;
+}
+
+.result-component {
+  position: relative;
+  border-style: solid;
+  border-radius: 7px;
+  margin: auto 3px;
+  display: inline-block;
+  width: 25%;
+  border-color: #e2e2e2;
+  border-width: 1px;
+}
+
+.result-component span {
+  font-weight: bold;
+}
+
+.result-component:nth-child(1) {
+  background-color: #aae67e;
+  border-color: #63be21;
+}
+
+.result-component:nth-child(2) {
+  width: 40%;
+}
+
+.result-component:nth-child(3) {
+  background-color: #ed6f7c;
+  border-color: #e01327;
+}
+
+@-webkit-keyframes heartBeat {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+
+  14% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
+  28% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+
+  42% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
+  70% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@keyframes heartBeat {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+
+  14% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
+  28% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+
+  42% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
+  70% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+.heartBeat {
+  -webkit-animation-name: heartBeat;
+  animation-name: heartBeat;
+  -webkit-animation-duration: 1.3s;
+  animation-duration: 1.3s;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+}
+
+.count-result {
+  border-style: solid;
+  border-radius: 50%;
+  border-color: #e2e2e2;
+  border-width: 0.5px;
+  width: 50%;
+  padding-bottom: 50%;
+  margin: 20px auto;
+  -webkit-animation-name: heartBeat;
+  animation-name: heartBeat;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-timing-function: ease-in-out;
+  animation-timing-function: ease-in-out;
+  position: relative;
+}
+
+.count-result span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.row * .row .col-6 {
+  text-align: center;
+}
+
+.row * .row .col-6:first-child {
+  padding-left: 25px;
+}
+
+.row * .row .col-6:last-child {
+  padding-right: 25px;
+}
+
+.twitter-share-button {
+  position: relative;
+  height: 20px;
+  box-sizing: border-box;
+  padding: 1px 8px 1px 6px;
+  background-color: #1b95e0;
+  color: #fff;
+  border-radius: 3px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.3);
+  position: absolute;
+  z-index:5;
+}
+
+.card {
+  background-color: rgb(255, 255, 255, 1);
+  border-style: solid;
+  border-width: 1px;
+  border-color: #D4D4D4;
+  border-radius: 4px;
+  -webkit-box-shadow: 7px 7px 6px -8px rgba(0,0,0,0.45);
+  -moz-box-shadow: 7px 7px 6px -8px rgba(0,0,0,0.45);
+  box-shadow: 7px 7px 6px -8px rgba(0,0,0,0.45);
+}
+
+.dialog-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 35px 30px;
+  width: 40%;
+}
+
+.copiable {
+  position: relative;
+  margin: 15px 0;
+}
+
+.copiable textarea {
+  color: #6d6d6d;
+  background-color: #ececec;
+  border-radius: 5px;
+  padding: 0 15px;
+  overflow-x: auto;
+  white-space: nowrap;
+  resize: none;
+  width: 100%;
+  height: 26px;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.copiable button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 12px;
+  border: 1px solid #6d6d6d;
+  border-radius: 0 5px 5px 0;
+  height: 26px;
+}
+
+.copiable button:focus {
+  outline-style: none;
+}
+
+.dialog-box p {
+  font-size: 13px;
+  margin: 0;
+}
+
+.dialog-box .grey-btn {
+  margin: 0 auto;
+}
+
+.twitter-share-button:active, .twitter-share-button:focus, .twitter-share-button:hover {
+    background-color: #0c7abf;
+    text-decoration: none;
+    color: #fff;
+}
 
 /* Responsive  */
 
 @media (max-width: 768px) {
+
+  .count {
+    margin-top: -25vw;
+  }
+
   .main-title .secondary-title {
     display: block;
     white-space: nowrap;
@@ -293,11 +554,6 @@ body {
 
   .secondary-title .title-sep {
     display: none;
-  }
-
-  .maj-center {
-    height: 32.14vw;
-    width: 32.14vw;
   }
 
   .switch-label {
@@ -314,9 +570,10 @@ body {
     width: 90vw;
     padding-bottom: 90vw;
     margin: auto;
+    margin-top: 25px;
   }
 
-  .column-up .parliament {
-    transform: translateY(-20vw);
+  .dialog-box {
+    width: 95%;
   }
 }

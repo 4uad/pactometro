@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './App.css';
 import queryString from 'query-string'
+import Draggable from 'react-draggable'
 
 const parties = [
   {
@@ -377,33 +378,98 @@ class Parliament extends React.Component {
 
 class Switch extends React.Component {
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      dragging: false,
+      width: 0
+    }
+    this.handleDrag = this.handleDrag.bind(this);
+    this.updateSize = this.updateSize.bind(this);
+    this.renderDraggable = this.renderDraggable.bind(this);
+    this.enableDragging = this.enableDragging.bind(this);
+  }
+
+  componentDidMount() {
+    this.updateSize()
+    window.addEventListener('resize', this.updateSize);
+  }
+
+  componentWillUnmount() {
+    this.updateSize()
+    window.removeEventListener('resize', this.updateSize);
+  }
+
+
+  updateSize() {
+    this.setState({
+      width: this.switch.offsetWidth
+    })
+    this.left = this.switch.offsetLeft;
+  }
+
+  handleDrag(e) {
+    let x = e.pageX
+    if(x == undefined) {
+      x = e.changedTouches[0].clientX
+    }
+    let limits = []
+
+    limits[0] = this.left + this.state.width / 3
+    limits[1] = limits[0] + this.state.width / 3
+
+    if(x < limits[0]) {
+      this.props.switchFunc(this.props.party, true)
+    } else if(x < limits[1]) {
+      this.props.switchFunc(this.props.party, null)
+    } else {
+      this.props.switchFunc(this.props.party, false)
+    }
+  }
+
+  enableDragging() {
+    this.setState({
+      dragging : true
+    })
+  }
+
+  renderDraggable(s) {
+    let posX = 0
+
+    if(this.props.position === true) {
+      posX = -this.state.width/2 + 20
+    }
+
+    if(this.props.position === false) {
+      posX = this.state.width/2 - 20
+    }
+
+    return(
+      <Draggable position = {{x: posX, y: 0}} bounds = "parent" axis="x" onStart = {() => this.enableDragging()} onStop = {e => this.handleDrag(e)}>
+        <div style = {s} className = "switch-btn" />
+      </Draggable>
+    )
+  }
+
   render() {
 
     const style = {
       backgroundColor : this.props.color
     }
 
-    const styleBtn = {
+    let styleBtn = {
       borderColor : this.props.color,
       backgroundImage : "url(" + this.props.logo + ")",
-      transition: "left 0.7s"
-    }
-
-    if(this.props.position === true) {
-      styleBtn.left = 0
-    }
-
-    if(this.props.position === false) {
-      styleBtn.left = "100%"
+      transition: "transform " + (this.state.dragging ? 0 : 0) + "s"
     }
 
     return(
-      <div style = {style} className = "switch">
+      <div style = {style} ref = {(e) => this.switch = e} className = "switch">
         <div className = "switch-section" onClick = {() => this.props.switchFunc(this.props.party, this.props.position === true ? null : true)} />
         <div className = "switch-section" onClick = {() => this.props.switchFunc(this.props.party, this.props.position == null ? true : null)} />
         <div className = "switch-section" onClick = {() => this.props.switchFunc(this.props.party, this.props.position == false ? null : false)} />
         <span className = "switch-label">{this.props.party + this.props.seats}</span>
-        <div style = {styleBtn} className = "switch-btn" />
+        {this.state.width && this.renderDraggable(styleBtn)}
       </div>
     )
   }
@@ -411,8 +477,10 @@ class Switch extends React.Component {
 
 class Button extends React.Component {
   render() {
+    const icon = this.props.icon.length > 0 ? <i className = {this.props.icon} /> : <></>
+
     return(
-      <button className = "grey-btn" onClick = {() => this.props.func(null)} style = {{display: this.props.show ? "block" : "none"}}><i className = {this.props.icon} /> {this.props.label}</button>
+      <button className = "grey-btn" onClick = {(e) => this.props.func(e, null)}>{icon}{this.props.label}</button>
     )
   }
 }
@@ -421,7 +489,7 @@ class Sector extends React.Component {
   render() {
 
     return(
-        <div className={"votes votes-" + this.props.vote} style = {{clipPath: "polygon(50% 50%, " + this.props.range.end.h + " " + this.props.range.end.v + " , 50% -10000%, " + this.props.range.start.h + " " + this.props.range.start.v + " )"}} />
+        <div className={"votes votes-" + this.props.vote} style = {{clipPath: "polygon(50% 50%, " + this.props.range.end.h + " " + this.props.range.end.v + " , 50% -999999%, " + this.props.range.start.h + " " + this.props.range.start.v + " )"}} />
     )
   }
 
@@ -438,7 +506,7 @@ class Majorities extends React.Component {
       t : {
         start : {
           v : "50%",
-          h : "0"
+          h : "-0.5%"
         },
         end : {
           v : 50 * (1 - 2*Math.sin(endAngles[0])) + "%",
@@ -454,7 +522,7 @@ class Majorities extends React.Component {
       f : {
         end : {
           v : "50%",
-          h : "100%",
+          h : "100.5%",
         }
       }
     }
@@ -483,6 +551,73 @@ class Majorities extends React.Component {
   }
 }
 
+class Count extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  render() {
+    const votes = [this.props.yes, this.props.neutral, this.props.no];
+    const names = ["Sí", "Abstención", "No"];
+    const count = votes.map( (v, i) => <div className = "result-component" key = {i}><span>{names[i]}</span><div>{v}</div>{v > 0 ? <div className = "tool-tip">{this.props.parties.filter(o => o.vote === (i === 0 ? true : (i === 1 ? null : false))).map((p, j) => <div key = {j} className = "switch-btn" style = {{borderColor: p.color, backgroundImage: "url(" + p.logo + ")"}} />)}</div> : <></>}</div>)
+    const resultid = votes[0] / votes.reduce((a,b) => a+b) > .5 ?  0 : (votes[0] > votes[2] ?  1 : 2)
+    const results = [<>Mayoría<br />absoluta<br />🤝</>, <>Mayoría<br />simple<br />🤝</>, <>Sin<br />mayoría<br />👎</>]
+
+    return(
+      <div className = "count">
+        {count}
+        <div key = {"result" + resultid} className = "count-result"><span>{results[resultid]}</span></div>
+      </div>
+    )
+  }
+}
+
+class Copiable extends React.Component {
+  constructor(props) {
+    super(props)
+    this.copyToClipboard = this.copyToClipboard.bind(this)
+    this.state = {
+      copied : false
+    }
+  }
+
+  copyToClipboard(e) {
+    this.textArea.select()
+    document.execCommand('copy')
+    e.target.focus()
+    this.setState({
+      copied: true
+    })
+  }
+
+  render() {
+    const btn = this.state.copied ? <><i class="fas fa-check"></i> Copiado</> : <><i class="far fa-clipboard"></i> Copiar</>
+
+    return(
+      <div className = "copiable">
+        <textarea ref = {(textarea) => this.textArea = textarea} readonly = "true">
+          {this.props.children}
+        </textarea>
+      {document.queryCommandSupported('copy') &&
+      <button onClick = {(e) => this.copyToClipboard(e)}>{btn}</button>}
+      </div>
+    )
+  }
+}
+
+class ShareDialog extends React.Component {
+  render() {
+    return(
+      <div className = "card dialog-box">
+        <h5>{this.props.title}</h5>
+        <p>{this.props.label}</p>
+        <Copiable>{window.location.href}</Copiable>
+        <Button label = "Ok" icon = "" func = {this.props.func} />
+      </div>
+    )
+  }
+}
+
 class App extends React.Component {
 
   constructor(props) {
@@ -500,11 +635,13 @@ class App extends React.Component {
     }
 
     this.state = {
-      parties : initialParties
+      parties : initialParties,
+      dialog : false
     }
 
     this.changeVote = this.changeVote.bind(this)
     this.changeAllVotes = this.changeAllVotes.bind(this)
+    this.toggleDialog = this.toggleDialog.bind(this)
   }
 
   changeVote(party, vote) {
@@ -531,7 +668,7 @@ class App extends React.Component {
     this.props.history.push(window.location.pathname + "?" + currentUrlParams.toString())
   }
 
-  changeAllVotes(vote) {
+  changeAllVotes(e, vote) {
     let p = Array.from(this.state.parties)
     let currentUrlParams = new URLSearchParams(window.location.search)
 
@@ -548,37 +685,57 @@ class App extends React.Component {
     })
   }
 
+
+  toggleDialog(e) {
+    e.preventDefault()
+    if(e.target === e.currentTarget) {
+      this.setState({
+        dialog: !this.state.dialog
+      })
+   }
+  }
+
   render() {
 
-    const switches = this.state.parties.map((o, i) => <Switch key = {i} party = {o.party} seats = {" (" + o.seats + ")"} switchFunc = {this.changeVote} color = {o.color} position = {o.vote} logo = {o.logo} />)
+    const switches = this.state.parties.map((o, i) => <Switch key = {i} party = {o.party} translate = {o.party === this.state.dragging ? this.state.switch_translate : 0} seats = {" (" + o.seats + ")"} switchFunc = {this.changeVote} color = {o.color} position = {o.vote} logo = {o.logo} />)
     const votes = [true, false, null].map(x => this.state.parties.filter(y => y.vote == x).map(o => o.seats).reduce( (a, b) => a + b, 0) )
-
+    const button = votes[0] + votes[1] > 0 ? <Button func = {this.changeAllVotes} label = "Reiniciar" icon = "fas fa-undo" /> : <></>
 
     return(
       <>
-      <Title text = "Pactómetro" secondary = {"Elecciones generales"} bg = {"espana.jpg"} />
-      <div className = "main-frame row">
-        <div className = "col-lg-5 col-sm-12 switches">
-          <div className = "switch-header">
-            <span>Sí</span>
-            <span>Abs.</span>
-            <span>No</span>
-          </div>
-          {switches}
-        </div>
-        <div className = "col-lg-6 col-sm-12">
-          <div className = "row">
-            <div className = "col-lg-6 col-sm-12 button-middle">
-              <Button show = {votes[0] + votes[1] > 0} func = {this.changeAllVotes} label = "Reiniciar" icon = "fas fa-undo" />
-              <Majorities yes = {votes[0]} no =  {votes[1]} neutral =  {votes[2]} />
+        {this.state.dialog ? <div className = "overlay" onClick = {(e) => this.toggleDialog(e)}><ShareDialog title = "Compartir pacto" label = "Usa este link para compartir tu pacto" btn = "Ok" func = {this.toggleDialog}>{window.location.href}</ShareDialog></div> : <></>}
+        <Title text = "Pactómetro" secondary = {"Elecciones generales"} bg = {"espana.jpg"} />
+        <div className = "main-frame row">
+          <div className = "col-lg-5 col-sm-12 switches">
+            <div className = "switch-header">
+              <span>Sí</span>
+              <span>Abs.</span>
+              <span>No</span>
             </div>
-            <div className = "col-lg-6 col-sm-12 column-up">
-              <Parliament seats = {350} rows = {10} parties = {this.state.parties} switchFunc = {this.changeVote} />
-            </div>
+            {switches}
           </div>
+          <div className = "col-lg-6 col-sm-12">
+            <div className = "row">
+              <div className = "col-lg-6 col-sm-12 button-middle">
+                {button}
+                <Majorities yes = {votes[0]} no =  {votes[1]} neutral =  {votes[2]} />
+                <Count yes = {votes[0]} no =  {votes[1]} neutral =  {votes[2]} parties = {this.state.parties} />
+                <div className = "row social">
+                  <div className = "col-6">
+                    <Button label = "Compartir pacto" icon = "fas fa-share-alt" func = {this.toggleDialog} />
+                  </div>
+                  <div className = "col-6">
+                    <a className = "twitter-share-button" href={encodeURI("https://twitter.com/intent/tweet?text=Mira el pacto de investidura que he creado: ") + window.location.href.replace(/&/g, "%26")} target = "_blank"><i className="fab fa-twitter"></i>Compartir en Twitter</a>
+                  </div>
+                </div>
+              </div>
+              <div className = "col-lg-6 col-sm-12 column-up">
+                <Parliament seats = {350} rows = {10} parties = {this.state.parties} switchFunc = {this.changeVote} />
+              </div>
+            </div>
 
+          </div>
         </div>
-      </div>
       </>
     )
   }
