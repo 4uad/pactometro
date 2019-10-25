@@ -20,7 +20,7 @@ body {
   margin: 0;
 }
 
-.main-title .secondary-title  {
+.main-title .secondary-title {
   font-family: 'Nunito', sans-serif;
 }
 
@@ -84,7 +84,7 @@ body {
   border-color: white;
   border-width: 2.5px;
   transform-origin: left center;
-  z-index: 1;
+  z-index: 3;
   transition: transform 1s;
   padding-left: 4vw;
   font-size: 10px;
@@ -129,7 +129,6 @@ body {
   animation: heartBeat 2s;
   animation-timing-function: ease-in-out;
 } */
-
 .switch {
   width: 50%;
   height: 5px;
@@ -213,7 +212,7 @@ button i, a i {
   z-index: 10;
 }
 
-div:hover > .tool-tip {
+div:hover>.tool-tip {
   display: inline-block;
 }
 
@@ -263,8 +262,10 @@ div:hover > .tool-tip {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%); /* Inicio: último punto. Fin: segundo punto */
-  transition: clip-path 1s;
+  transform: translate(-50%, -50%);
+  transition: transform 0.7s;
+  clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0% 100%);
+  z-index: 1;
 }
 
 .maj-center {
@@ -293,10 +294,22 @@ div:hover > .tool-tip {
 }
 
 .votes.votes-neutral {
+  clip-path: polygon(0 50%, 100% 50%, 100% 0, 0 0);
   background-color: #e0e0e0;
+  z-index: 0;
 }
 
-.button-middle > .grey-btn {
+.votes-overlay {
+  width: 105%;
+  padding-bottom: 51%;
+  background-color: white;
+  position: absolute;
+  top: 49.9%;
+  left: -2.5%;
+  z-index: 2;
+}
+
+.button-middle>.grey-btn {
   position: absolute;
   left: 100%;
   transform: translateX(-50%);
@@ -316,6 +329,7 @@ div:hover > .tool-tip {
   text-transform: uppercase;
   text-align: center;
   margin-top: -8vw;
+  z-index: 3;
 }
 
 .result-component {
@@ -347,69 +361,6 @@ div:hover > .tool-tip {
   border-color: #e01327;
 }
 
-@-webkit-keyframes heartBeat {
-  0% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-
-  14% {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
-  }
-
-  28% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-
-  42% {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
-  }
-
-  70% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-}
-
-@keyframes heartBeat {
-  0% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-
-  14% {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
-  }
-
-  28% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-
-  42% {
-    -webkit-transform: scale(1.1);
-    transform: scale(1.1);
-  }
-
-  70% {
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-}
-
-.heartBeat {
-  -webkit-animation-name: heartBeat;
-  animation-name: heartBeat;
-  -webkit-animation-duration: 1.3s;
-  animation-duration: 1.3s;
-  -webkit-animation-timing-function: ease-in-out;
-  animation-timing-function: ease-in-out;
-}
-
 .count-result {
   border-style: solid;
   border-radius: 50%;
@@ -427,7 +378,7 @@ div:hover > .tool-tip {
   position: relative;
 }
 
-.count-result span {
+.count-result>span {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -463,9 +414,9 @@ div:hover > .tool-tip {
 .overlay {
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0,0,0,0.3);
+  background-color: rgba(0, 0, 0, 0.3);
   position: absolute;
-  z-index:5;
+  z-index: 5;
 }
 
 .card {
@@ -474,9 +425,9 @@ div:hover > .tool-tip {
   border-width: 1px;
   border-color: #D4D4D4;
   border-radius: 4px;
-  -webkit-box-shadow: 7px 7px 6px -8px rgba(0,0,0,0.45);
-  -moz-box-shadow: 7px 7px 6px -8px rgba(0,0,0,0.45);
-  box-shadow: 7px 7px 6px -8px rgba(0,0,0,0.45);
+  -webkit-box-shadow: 7px 7px 6px -8px rgba(0, 0, 0, 0.45);
+  -moz-box-shadow: 7px 7px 6px -8px rgba(0, 0, 0, 0.45);
+  box-shadow: 7px 7px 6px -8px rgba(0, 0, 0, 0.45);
 }
 
 .dialog-box {
@@ -506,7 +457,7 @@ div:hover > .tool-tip {
 }
 
 ::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .copiable button {
@@ -533,15 +484,13 @@ div:hover > .tool-tip {
 }
 
 .twitter-share-button:active, .twitter-share-button:focus, .twitter-share-button:hover {
-    background-color: #0c7abf;
-    text-decoration: none;
-    color: #fff;
+  background-color: #0c7abf;
+  text-decoration: none;
+  color: #fff;
 }
 
 /* Responsive  */
-
 @media (max-width: 768px) {
-
   .count {
     margin-top: -25vw;
   }
