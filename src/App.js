@@ -9,7 +9,6 @@ const parties = [
   {
     key : "psoe",
     party : "PSOE",
-    default : true,
     ideology : 1,
     seats : 123,
     color : "#EF1C27",
@@ -20,7 +19,6 @@ const parties = [
   {
     key : "pp",
     party : "PP",
-    default: false,
     ideology : 8,
     seats : 66,
     color : "#1D84CE",
@@ -31,7 +29,6 @@ const parties = [
   {
     key : "cs",
     party : "Ciudadanos",
-    default: false,
     ideology : 7,
     seats : 57,
     color : "#EB6109",
@@ -42,7 +39,6 @@ const parties = [
   {
     key : "up",
     party : "Unidas Podemos",
-    default: true,
     ideology : 2,
     seats : 42,
     color : "#672F6C",
@@ -53,7 +49,6 @@ const parties = [
   {
     key : "vox",
     party : "VOX",
-    default: true,
     ideology : 9,
     seats : 24,
     color : "#63be21",
@@ -64,7 +59,6 @@ const parties = [
   {
     key : "erc",
     party : "ERC-SOBIRANISTES",
-    default: true,
     ideology : 4,
     seats : 15,
     color : "#FFB232",
@@ -75,7 +69,6 @@ const parties = [
   {
     key : "jx",
     party : "JxCAT-JUNTS",
-    default: true,
     ideology : 5,
     seats : 7,
     color : "#ED5975",
@@ -86,7 +79,6 @@ const parties = [
   {
     key : "pnv",
     party : "EAJ-PNV",
-    default: true,
     ideology : 6,
     seats : 6,
     color : "#008000",
@@ -97,7 +89,6 @@ const parties = [
   {
     key : "ehb",
     party : "EH Bildu",
-    default: true,
     ideology : 3,
     seats : 4,
     color : "#b5cf18",
@@ -108,7 +99,6 @@ const parties = [
   {
     key : "ns",
     party : "Navarra Suma",
-    default: true,
     ideology : 6,
     seats : 2,
     color : "#2A52BE",
@@ -119,7 +109,6 @@ const parties = [
   {
     key : "cc",
     party : "Coalición Canaria",
-    default: true,
     ideology : 6,
     seats : 2,
     color : "#ffd700",
@@ -130,7 +119,6 @@ const parties = [
   {
     key : "com",
     party : "Compromís",
-    default: true,
     ideology : 2,
     seats : 1,
     color : "#E65F00",
@@ -141,7 +129,6 @@ const parties = [
   {
     key : "prc",
     party : "PRC",
-    default: true,
     ideology : 4,
     seats : 1,
     color : "#C2CE0C",
