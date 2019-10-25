@@ -5,6 +5,9 @@ import Draggable from 'react-draggable'
 
 // Parties and their properties
 
+const rowCount = 10
+const seatCount = 350
+
 const parties = [
   {
     key : "psoe",
@@ -719,7 +722,7 @@ class App extends React.Component {
                 </div>
               </div>
               <div className = "col-lg-6 col-sm-12 column-up">
-                <Parliament seats = {350} rows = {10} parties = {this.state.parties} switchFunc = {this.changeVote} />
+                <Parliament seats = {seatCount} rows = {rowCount} parties = {this.state.parties} switchFunc = {this.changeVote} />
               </div>
             </div>
 
