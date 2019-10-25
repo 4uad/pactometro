@@ -1,528 +1,496 @@
-body {
-  font-family: 'Nunito', sans-serif;
-}
-
 #root {
-  width: 100%;
   height: 100vh;
   overflow-x: hidden;
+  width: 100%
 }
 
 .main-title {
-  position: fixed;
-  top: 60px;
+  color: #FFF;
+  font-family: Pacifico, cursive;
   left: 50%;
-  text-align: center;
-  font-family: 'Pacifico', cursive;
-  transform: translate(-50%, -50%);
-  color: white;
-  text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
   margin: 0;
-}
-
-.main-title .secondary-title {
-  font-family: 'Nunito', sans-serif;
+  position: fixed;
+  text-align: center;
+  text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
+  top: 60px;
+  transform: translate(-50%, -50%)
 }
 
 .title-bg {
-  filter: blur(8px);
   -webkit-filter: blur(8px);
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
+  filter: blur(8px);
   min-height: 120px;
-  width: 100%;
   transform: scale(1.1);
+  width: 100%
 }
 
 .main-frame {
-  background-color: white;
-  transform: translateY(-2px);
+  background-color: #FFF;
   padding-top: 50px;
+  transform: translateY(-2px)
 }
 
 .parliament {
-  width: 100%;
   height: 0;
   padding-bottom: 100%;
-  text-align: center;
   position: relative;
+  text-align: center;
+  width: 100%
 }
 
 .seat {
-  position: absolute;
-  color: #e0e0e0;
   border-radius: 50%;
+  color: #e0e0e0;
   font-size: 10.7px;
-  transform: translate(-50%, -50%);
+  position: absolute;
+  transform: translate(-50%, -50%)
 }
 
 .seat-label {
-  display: none;
-  position: absolute;
-  color: white;
-  background-color: black;
-  opacity: 0.9;
+  background-color: #000;
   border-radius: 2px;
+  color: #FFF;
+  display: none;
+  opacity: 0.9;
   padding: 8px;
-  z-index: 1;
+  position: absolute;
   transform: translate(-50%, -120%);
+  z-index: 1
 }
 
 .maj span .maj-check {
   display: inline;
-  padding-right: 8%;
+  padding-right: 8%
 }
 
 .maj {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 55%;
-  height: 0;
+  border-color: #FFF;
   border-style: none;
-  border-color: white;
   border-width: 2.5px;
-  transform-origin: left center;
-  z-index: 3;
-  transition: transform 1s;
-  padding-left: 4vw;
+  color: #FFF;
   font-size: 10px;
-  font-weight: bold;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-  color: white;
-  white-space: nowrap;
+  font-weight: 700;
+  height: 0;
+  left: 50%;
+  padding-left: 4vw;
+  position: absolute;
   text-align: left;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  top: 50%;
+  transform-origin: left center;
+  transition: transform 1s;
+  white-space: nowrap;
+  width: 55%;
+  z-index: 3
 }
 
 .maj.simple {
-  border-top-style: dashed;
+  border-top-style: dashed
 }
 
 .maj.abs {
-  border-top-style: solid;
+  border-top-style: solid
 }
 
-/* @keyframes heartBeat {
-  0% {
-    transform: scale(1);
-  }
-
-  14% {
-    transform: scale(1.3);
-  }
-
-  28% {
-    transform: scale(1);
-  }
-
-  42% {
-    transform: scale(1.3);
-  }
-
-  70% {
-    transform: scale(1);
-  }
-}
-
-.heartBeat {
-  animation: heartBeat 2s;
-  animation-timing-function: ease-in-out;
-} */
 .switch {
-  width: 50%;
+  border-radius: 10%;
   height: 5px;
   margin: 40px auto 40px 25px;
-  border-radius: 10%;
   position: relative;
+  width: 50%
 }
 
 .switch-header {
-  position: relative;
   color: #bababa;
-  width: 50%;
-  margin: auto;
-  margin-left: 25px;
+  margin: auto auto auto 25px;
+  position: relative;
+  width: 50%
 }
 
 .grey-btn {
   background-color: #e0e0e0;
-  border-style: none;
   border-radius: 4px;
-  padding: 3px 10px;
+  border-style: none;
   font-size: 11px;
-  text-transform: uppercase;
+  padding: 3px 10px;
+  text-transform: uppercase
 }
 
 button i, a i {
-  margin-right: 5px;
+  margin-right: 5px
 }
 
 .switch-header span {
   position: absolute;
-  transform: translateX(-50%);
   text-transform: uppercase;
+  transform: translateX(-50%)
 }
 
 .switch-header span:nth-child(1) {
-  left: 20px;
+  left: 20px
 }
 
 .switch-header span:nth-child(2) {
-  left: 50%;
+  left: 50%
 }
 
 .switch-header span:nth-child(3) {
-  left: calc(100% - 20px);
+  left: calc(100% - 20px)
 }
 
 .switch-btn {
+  background-color: #FFF;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border-radius: 50%;
   border-style: solid;
   border-width: 2px;
-  border-radius: 50%;
   height: 40px;
-  width: 40px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  background-color: white;
+  width: 40px
 }
 
 .tool-tip .switch-btn {
   display: inline-block;
-  margin: 10px;
+  margin: 10px
 }
 
 .switch .switch-btn {
-  position: absolute;
   left: calc(50% - 20px);
   margin-top: -20px;
+  position: absolute
 }
 
 .tool-tip {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  width: 150%;
-  display: none;
-  background-color: rgb(0, 0, 0, 0.7);
-  color: white;
+  background-color: #000;
   border-radius: 5px;
+  color: #FFF;
+  display: none;
+  left: 50%;
+  position: absolute;
+  top: 0;
   transform: translate(-50%, -110%);
   z-index: 10;
+  padding: 5px 10px;
+}
+
+.result-component > .tool-tip {
+  width: 150%;
 }
 
 div:hover>.tool-tip {
-  display: inline-block;
+  display: inline-block
 }
 
 .switch-label {
   color: #bababa;
-  text-transform: uppercase;
+  font-weight: 700;
   position: absolute;
   right: 0;
-  font-weight: bold;
-  transform: translate(calc(100% + 25px), -7.5px);
+  text-transform: uppercase;
+  transform: translate(calc(100% + 25px), -7.5px)
 }
 
 .switch:hover, .seat:hover {
-  cursor: pointer;
+  cursor: pointer
 }
 
 .switch-section {
-  position: absolute;
-  width: calc(50% - 20px);
   height: 40px;
+  position: absolute;
   top: -17.5px;
+  width: calc(50% - 20px)
 }
 
 .switch-section:nth-of-type(1) {
-  left: 0;
+  left: 0
 }
 
 .switch-section:nth-of-type(2) {
-  width: 40px;
   left: 50%;
   transform: translateX(-50%);
+  width: 40px
 }
 
 .switch-section:nth-of-type(3) {
-  right: 0;
+  right: 0
 }
 
 .switches {
-  overflow: hidden auto;
+  overflow: hidden auto
 }
 
 .votes {
-  width: 100%;
-  height: 0;
-  padding-bottom: 100%;
+  -webkit-clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0% 100%);
   border-radius: 50%;
-  position: absolute;
+  clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0% 100%);
+  height: 0;
   left: 50%;
+  padding-bottom: 100%;
+  position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  transition: transform 0.7s;
-  clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0% 100%);
-  z-index: 1;
+  transition: transform .7s;
+  width: 100%;
+  z-index: 1
 }
 
 .maj-center {
-  background-color: white;
+  background-color: #FFF;
   border-radius: 50%;
   height: 33%;
-  width: 33%;
-  position: absolute;
   left: 50%;
+  position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
-  z-index: 3;
+  width: 33%;
+  z-index: 3
 }
 
 .maj span {
   display: block;
-  transform: rotateZ(180deg);
+  transform: rotateZ(180deg)
 }
 
 .votes.votes-true {
-  background-color: #63be21;
+  background-color: #63be21
 }
 
 .votes.votes-false {
-  background-color: #e01327;
+  background-color: #e01327
 }
 
 .votes.votes-neutral {
-  clip-path: polygon(0 50%, 100% 50%, 100% 0, 0 0);
+  -webkit-clip-path: polygon(0 50%, 100% 50%, 100% 0, 0 0);
   background-color: #e0e0e0;
-  z-index: 0;
+  clip-path: polygon(0 50%, 100% 50%, 100% 0, 0 0);
+  z-index: 0
 }
 
 .votes-overlay {
-  width: 105%;
+  background-color: #FFF;
+  left: -2.5%;
   padding-bottom: 51%;
-  background-color: white;
   position: absolute;
   top: 49.9%;
-  left: -2.5%;
-  z-index: 2;
+  width: 105%;
+  z-index: 2
 }
 
 .button-middle>.grey-btn {
-  position: absolute;
   left: 100%;
+  position: absolute;
   transform: translateX(-50%);
-  z-index: 6;
+  z-index: 6
 }
 
 .parl-wrapper:first-of-type {
-  margin-right: 15px;
+  margin-right: 15px
 }
 
 .parl-wrapper:last-of-type {
-  margin-left: 15px;
+  margin-left: 15px
 }
 
 .count {
-  position: relative;
-  text-transform: uppercase;
-  text-align: center;
   margin-top: -8vw;
-  z-index: 3;
+  position: relative;
+  text-align: center;
+  text-transform: uppercase;
+  z-index: 3
 }
 
 .result-component {
-  position: relative;
-  border-style: solid;
-  border-radius: 7px;
-  margin: auto 3px;
-  display: inline-block;
-  width: 25%;
   border-color: #e2e2e2;
+  border-radius: 7px;
+  border-style: solid;
   border-width: 1px;
+  display: inline-block;
+  margin: auto 3px;
+  position: relative;
+  width: 25%
 }
 
 .result-component span {
-  font-weight: bold;
+  font-weight: 700
 }
 
 .result-component:nth-child(1) {
   background-color: #aae67e;
-  border-color: #63be21;
+  border-color: #63be21
 }
 
 .result-component:nth-child(2) {
-  width: 40%;
+  width: 40%
 }
 
 .result-component:nth-child(3) {
   background-color: #ed6f7c;
-  border-color: #e01327;
+  border-color: #e01327
 }
 
 .count-result {
-  border-style: solid;
-  border-radius: 50%;
-  border-color: #e2e2e2;
-  border-width: 0.5px;
-  width: 50%;
-  padding-bottom: 50%;
-  margin: 20px auto;
-  -webkit-animation-name: heartBeat;
-  animation-name: heartBeat;
-  -webkit-animation-duration: 1s;
   animation-duration: 1s;
-  -webkit-animation-timing-function: ease-in-out;
+  animation-name: heartBeat;
   animation-timing-function: ease-in-out;
+  border-color: #e2e2e2;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: .5px;
+  margin: 20px auto;
+  padding-bottom: 50%;
   position: relative;
+  width: 50%
 }
 
 .count-result>span {
-  position: absolute;
   left: 50%;
+  position: absolute;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%)
 }
 
 .row * .row .col-6 {
-  text-align: center;
+  text-align: center
 }
 
 .row * .row .col-6:first-child {
-  padding-left: 25px;
+  padding-left: 25px
 }
 
 .row * .row .col-6:last-child {
-  padding-right: 25px;
+  padding-right: 25px
 }
 
 .twitter-share-button {
-  position: relative;
-  height: 20px;
-  box-sizing: border-box;
-  padding: 1px 8px 1px 6px;
   background-color: #1b95e0;
-  color: #fff;
   border-radius: 3px;
-  font-weight: 500;
+  box-sizing: border-box;
+  color: #fff;
   cursor: pointer;
   font-size: 14px;
-  white-space: nowrap;
+  font-weight: 500;
+  height: 20px;
+  padding: 1px 8px 1px 6px;
+  position: relative;
+  white-space: nowrap
 }
 
 .overlay {
-  width: 100vw;
-  height: 100vh;
   background-color: rgba(0, 0, 0, 0.3);
+  height: 100vh;
   position: absolute;
-  z-index: 5;
+  width: 100vw;
+  z-index: 5
 }
 
 .card {
-  background-color: rgb(255, 255, 255, 1);
-  border-style: solid;
-  border-width: 1px;
+  background-color: #fff;
   border-color: #D4D4D4;
   border-radius: 4px;
-  -webkit-box-shadow: 7px 7px 6px -8px rgba(0, 0, 0, 0.45);
-  -moz-box-shadow: 7px 7px 6px -8px rgba(0, 0, 0, 0.45);
-  box-shadow: 7px 7px 6px -8px rgba(0, 0, 0, 0.45);
+  border-style: solid;
+  border-width: 1px;
+  box-shadow: 7px 7px 6px -8px rgba(0, 0, 0, 0.45)
 }
 
 .dialog-box {
+  left: 50%;
+  padding: 35px 30px;
   position: absolute;
   top: 50%;
-  left: 50%;
   transform: translate(-50%, -50%);
-  padding: 35px 30px;
-  width: 40%;
+  width: 40%
 }
 
 .copiable {
-  position: relative;
   margin: 15px 0;
+  position: relative
 }
 
 .copiable textarea {
-  color: #6d6d6d;
   background-color: #ececec;
   border-radius: 5px;
-  padding: 0 15px;
-  overflow-x: auto;
-  white-space: nowrap;
-  resize: none;
-  width: 100%;
+  color: #6d6d6d;
   height: 26px;
+  overflow-x: auto;
+  padding: 0 15px;
+  resize: none;
+  white-space: nowrap;
+  width: 100%
 }
 
 ::-webkit-scrollbar {
-  display: none;
+  display: none
 }
 
 .copiable button {
-  position: absolute;
-  right: 0;
-  top: 0;
-  font-size: 12px;
   border: 1px solid #6d6d6d;
   border-radius: 0 5px 5px 0;
+  font-size: 12px;
   height: 26px;
+  position: absolute;
+  right: 0;
+  top: 0
 }
 
 .copiable button:focus {
-  outline-style: none;
+  outline-style: none
 }
 
 .dialog-box p {
   font-size: 13px;
-  margin: 0;
+  margin: 0
 }
 
 .dialog-box .grey-btn {
-  margin: 0 auto;
+  margin: 0 auto
 }
 
 .twitter-share-button:active, .twitter-share-button:focus, .twitter-share-button:hover {
   background-color: #0c7abf;
-  text-decoration: none;
   color: #fff;
+  text-decoration: none
 }
 
-/* Responsive  */
-@media (max-width: 768px) {
+body, .main-title .secondary-title {
+  font-family: Nunito, sans-serif
+}
+
+@media max-width 768px {
   .count {
-    margin-top: -25vw;
+    margin-top: -25vw
   }
 
   .main-title .secondary-title {
     display: block;
-    white-space: nowrap;
     font-size: 12px;
+    white-space: nowrap
   }
 
   .secondary-title .title-sep {
-    display: none;
+    display: none
   }
 
   .switch-label {
-    font-size: 0.65rem;
+    font-size: .65rem
   }
 
   .button-middle .grey-btn {
     left: auto;
     right: 5%;
-    transform: none;
+    transform: none
   }
 
   .parliament {
-    width: 90vw;
+    margin: 25px auto auto;
     padding-bottom: 90vw;
-    margin: auto;
-    margin-top: 25px;
+    width: 90vw
   }
 
   .dialog-box {
-    width: 95%;
+    width: 95%
   }
 }

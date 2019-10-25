@@ -3,6 +3,8 @@ import './App.css';
 import queryString from 'query-string'
 import Draggable from 'react-draggable'
 
+// Parties and their properties
+
 const parties = [
   {
     key : "psoe",
@@ -149,7 +151,7 @@ const parties = [
   }
 ]
 
-// Main app title
+// App header
 
 class Title extends React.Component {
 
@@ -158,6 +160,7 @@ class Title extends React.Component {
 
     let mainTitle = this.props.text
 
+    // If there is a secondary title, we add it next to main title
     if(this.props.secondary !== undefined) {
       mainTitle =  <>
                       {mainTitle}
@@ -182,32 +185,13 @@ class Title extends React.Component {
   }
 }
 
-// Defines an individual Seat in parliament
 
+// An individual seat (circle) in parliament with a tooltip.
 class Seat extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      hovered : false
-    }
-    this.mouseEnter = this.mouseEnter.bind(this)
-    this.mouseLeave = this.mouseLeave.bind(this)
-  }
-
-  mouseEnter() {
-    this.setState({
-      hovered : true
-    })
-  }
-
-  mouseLeave() {
-    this.setState({
-      hovered : false
-    })
-  }
 
   render() {
 
+    // Position is defined in polar coordinates: theta (angle) and r (radius)
     const seatStyle = {
       left : (50 + this.props.r * Math.cos(this.props.theta)) + "%",
       top : -(this.props.r * Math.sin(this.props.theta) - 50) + "%",
@@ -217,59 +201,66 @@ class Seat extends React.Component {
     const labelStyle = {
       left : (50 + this.props.r * Math.cos(this.props.theta)) + "%",
       top : -(this.props.r * Math.sin(this.props.theta) - 50) + "%",
-      display : this.state.hovered ? "inline-block" : "none"
     }
 
     let seat = <></>
 
+    // icon depends on vote. Clicking changes vote.
     if(this.props.vote === true) {
-        seat = <i className = "fas fa-check-circle seat" style = {seatStyle} onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} onClick = {() => this.props.switchFunc(this.props.party, false)} />
+        seat = <i className = "fas fa-check-circle seat" style = {seatStyle} onClick = {() => this.props.switchFunc(this.props.party, false)} />
     }
     if(this.props.vote === false) {
-        seat = <i className = "fas fa-times-circle seat" style = {seatStyle} onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} onClick = {() => this.props.switchFunc(this.props.party, null)} />
+        seat = <i className = "fas fa-times-circle seat" style = {seatStyle} onClick = {() => this.props.switchFunc(this.props.party, null)} />
     }
 
     if(this.props.vote == null) {
-        seat = <i className = "fas fa-circle seat" style = {seatStyle} onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave} onClick = {() => this.props.switchFunc(this.props.party, true)} />
+        seat = <i className = "fas fa-circle seat" style = {seatStyle} onClick = {() => this.props.switchFunc(this.props.party, true)} />
     }
 
     return(
-      <>
-        <span className = "seat-label" style = {labelStyle}>{this.props.party + " (" + this.props.seats + "):"}<br />{this.props.vote == null ? "Abstención" : (this.props.vote ? "Sí" : "No")}</span>
+      <div>
+        <span className = "tool-tip" style = {labelStyle}>{this.props.party + " (" + this.props.seats + "):"}<br />{this.props.vote == null ? "Abstención" : (this.props.vote ? "Sí" : "No")}</span>
         {seat}
-      </>
+      </div>
     )
 
 
   }
 }
 
-// Defines a parliament
-
+// Automatically creates a parliament with a given number of rows and seats using Seat elements.
 class Parliament extends React.Component {
 
   render() {
 
+    // First row length
     this.len = [120 * Math.PI];
 
+    // For the following rows, length is increased 20% each time
     for(let i = 1; i < this.props.rows; i++) {
       this.len.push(this.len[0] * (1 + i/5))
     }
 
+    // Length available per seat = total length / number of seats
     this.seatLength = this.len.reduce( (a, b) => a + b) / this.props.seats
 
+    // Number of seats per row
     this.rows = this.len.map( (r, i) => Math.round(r / this.seatLength) )
 
+    // Calculates total seats based on seats per row * number of rows
     const totalSeats = this.rows.reduce( (a, b) => a + b)
 
+    // If seats are missing, they are added to the last row
     if(totalSeats < this.props.seats) {
       this.rows[this.props.rows - 1] += this.props.seats - totalSeats
     }
 
+    // If there are too many seats, they are taken from the last row
     if(totalSeats > this.props.seats) {
       this.rows[this.props.rows - 1] -= totalSeats - this.props.seats
     }
 
+    // Properties for each party
     let partyOutput = {
       party: [],
       seats: [],
@@ -288,7 +279,9 @@ class Parliament extends React.Component {
 
     let theseParties = Array.from(this.props.parties)
 
+    // Sorts parties from left-wing to right-wing
     const parlParties = theseParties.sort((a, b) => a.ideology < b.ideology ? -1 : 1)
+
 
     let remainingSeatsTotal = this.props.seats
     let remainingSeats = parlParties.map((p, i) => p.seats)
@@ -347,8 +340,11 @@ class Parliament extends React.Component {
       return(x > minimumSeatsPerRow)
     }
 
+
+    // Asigns seats row by row to each party proportionally
     for(let i = 0; i < this.props.rows; i++) {
       if(i === 1) {
+        // If a party's proportion on a row is less than 3 seats, it is moved to the next one (prevents seats of the same party from lying on thin columns)
         minimumSeatsPerRow = 3
       }
 
@@ -357,11 +353,13 @@ class Parliament extends React.Component {
       thisRowSeats = remainingSeats.map(correspondingSeats).map(assignSeatRows)
       assignedSeats = thisRowSeats.reduce(sumTwo)
 
+      // Asigns seats
       if(assignedSeats < this.rows[i]) {
         thisRowSeats = thisRowSeats.map(remainderSeats)
         assignedSeats = thisRowSeats.reduce(sumTwo)
       }
 
+      // Adjusts extra or missing seats
       if(assignedSeats < this.rows[i]) {
         thisRowSeats[thisRowSeats.indexOf(Math.min(...thisRowSeats.filter(greaterThanMin)))] += this.rows[i] - assignedSeats
       }
@@ -379,6 +377,8 @@ class Parliament extends React.Component {
         colors: [],
         active: []
       }
+
+      // Saves the asignment
 
       index = 0;
 
@@ -401,8 +401,10 @@ class Parliament extends React.Component {
       remainingSeatsTotal = remainingSeats.reduce(sumTwo)
     }
 
+    // Angle between seats (polar coordinate)
     const thetaStepSize = this.rows.map((seats) => Math.PI / (seats - 1));
     const maxRadius = this.len[this.props.rows - 1]
+    // Radius relative to maximum (last row) radius
     const normalizedRadius = this.len.map( (r, i) => r * 50 / maxRadius)
     const seats = this.rows.map((n, i) => (Array(n).fill(thetaStepSize[i]).map((t, j) => <Seat switchFunc = {this.props.switchFunc} party = {partyOutput.party[i][j]} seats = {partyOutput.seats[i][j]} r = {normalizedRadius[i]} theta = {Math.PI - t * j} vote = {partyOutput.votes[i][j]} color = {partyOutput.colors[i][j]} active = {partyOutput.active[i][j]} key = {"r" + i + "s" + j} />)));
 
@@ -415,13 +417,14 @@ class Parliament extends React.Component {
 
 }
 
+// Creates a sliding switch that changes votes.
 class Switch extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      transition: 0.7,
-      width: 0
+      transition: 0.7, // Transition time when switch is moved
+      width: 0 // Switch element width
     }
     this.handleDrag = this.handleDrag.bind(this);
     this.updateSize = this.updateSize.bind(this);
@@ -429,7 +432,7 @@ class Switch extends React.Component {
   }
 
   componentDidMount() {
-    this.updateSize()
+    this.updateSize() // Gets element width
     window.addEventListener('resize', this.updateSize);
   }
 
@@ -439,14 +442,14 @@ class Switch extends React.Component {
   }
 
 
-  updateSize() {
+  updateSize() { // updates element width on window resize
     this.setState({
       width: this.switch.offsetWidth
     })
     this.left = this.switch.offsetLeft;
   }
 
-  handleDrag(e) {
+  handleDrag(e) { // updates party vote when drag stops
     let x = e.pageX
     if(x === undefined || x === null) {
       x = e.changedTouches[0].clientX
@@ -465,9 +468,10 @@ class Switch extends React.Component {
     }
   }
 
-  renderDraggable(s) {
+  renderDraggable(s) { // renders the draggable button once this.state.width is ready
     let posX = 0
 
+    // Initial position is determined by party vote.
     if(this.props.position === true) {
       posX = -this.state.width/2 + 20
     }
@@ -507,6 +511,7 @@ class Switch extends React.Component {
   }
 }
 
+// Generic grey button that performs an action on click.
 class Button extends React.Component {
   render() {
     const icon = this.props.icon.length > 0 ? <i className = {this.props.icon} /> : <></>
@@ -517,15 +522,19 @@ class Button extends React.Component {
   }
 }
 
+// Graphic showing yes votes vs. no votes.
 class Majorities extends React.Component {
   render() {
     const props = [this.props.yes, this.props.neutral, this.props.no]
     const total = props.reduce((a,b) => a+b)
+    // Gets the angle that each option should take.
     const angles = props.map((x, i) => Math.PI * x / total)
 
+    // Calculates simple and absolute majorities
     const majAbs = total % 2 === 0 ? total / 2 + 1 : Math.floor(total / 2) + 1
     const majSim = props[2] + 1
 
+    // Calculates rotation angles for majority lines
     const majSimpleRot = {
       display: majSim >= majAbs || props[0] >= majAbs ? "none" : "inline-block",
       transform: "translateY(-50%) rotate(" + -Math.PI * (1 - majSim / total) + "rad)"
@@ -545,16 +554,19 @@ class Majorities extends React.Component {
         <div className= "votes votes-neutral" />
         <div className= "votes votes-false"style = {{transform: "translate(-50%, -50%) rotate(-" + angles[2] + "rad)"}} />
       </div>
+      // Circle rotates to take corresponding angle
     )
   }
 }
 
+// A count for votes on each option and the result
 class Count extends React.Component {
 
   render() {
     const votes = [this.props.yes, this.props.neutral, this.props.no];
     const names = ["Sí", "Abstención", "No"];
     const count = votes.map( (v, i) => <div className = "result-component" key = {i}><span>{names[i]}</span><div>{v}</div>{v > 0 ? <div className = "tool-tip">{this.props.parties.filter(o => o.vote === (i === 0 ? true : (i === 1 ? null : false))).map((p, j) => <div key = {j} className = "switch-btn" style = {{borderColor: p.color, backgroundImage: "url(" + p.logo + ")"}} />)}</div> : <></>}</div>)
+    // Checks if there's simple (1) or absolute majority (0), or none (2)
     const resultid = votes[0] / votes.reduce((a,b) => a+b) > .5 ?  0 : (votes[0] > votes[2] ?  1 : 2)
     const results = [<>Mayoría<br />absoluta<br /><span role="img" aria-label="Hay mayoría absoluta">🤝</span></>, <>Mayoría<br />simple<br /><span role ="img" aria-label="Hay mayoría simple">🤝</span></>, <>Sin<br />mayoría<br /><span role="img" aria-label="No hay mayorías">👎</span></>]
 
@@ -567,6 +579,7 @@ class Count extends React.Component {
   }
 }
 
+// Creates a pre-populated textarea with a "Copy" button.
 class Copiable extends React.Component {
   constructor(props) {
     super(props)
@@ -576,6 +589,7 @@ class Copiable extends React.Component {
     }
   }
 
+  // Handles "Copy" button click
   copyToClipboard(e) {
     this.textArea.select()
     document.execCommand('copy')
@@ -583,7 +597,7 @@ class Copiable extends React.Component {
     this.setState({
       copied: true
     })
-  }
+  } // Button text changes to "Copiado" if copy was succesful
 
   render() {
     const btn = this.state.copied ? <><i className="fas fa-check"></i> Copiado</> : <><i className="far fa-clipboard"></i> Copiar</>
@@ -594,32 +608,36 @@ class Copiable extends React.Component {
       {document.queryCommandSupported('copy') &&
       <button onClick = {(e) => this.copyToClipboard(e)}>{btn}</button>}
       </div>
+      // Renders the copy button only if feature is supported by browser
     )
   }
 }
 
+// Shows a modal dialog with a title and content.
 class ShareDialog extends React.Component {
   render() {
     return(
       <div className = "card dialog-box">
         <h5>{this.props.title}</h5>
         <p>{this.props.label}</p>
-        <Copiable>{window.location.href}</Copiable>
-        <Button label = "Ok" icon = "" func = {this.props.func} />
+        {this.props.children}
       </div>
     )
   }
 }
 
+// Root App element
 class App extends React.Component {
 
   constructor(props) {
     super(props);
 
+    // Parses URL for pre-defined votes.
     const query = queryString.parse(this.props.location.search)
 
     let initialParties = Array.from(parties)
 
+    // Saves URL query votes in state
     for(let i = 0; i < initialParties.length; i++) {
       if(Object.keys(query).includes(initialParties[i].key)) {
         initialParties[i].vote = query[initialParties[i].key] === "1" ? true : (query[initialParties[i].key] === "0" ? false : null)
@@ -636,6 +654,7 @@ class App extends React.Component {
     this.toggleDialog = this.toggleDialog.bind(this)
   }
 
+  // Changes votes of party "party" to "vote" and updates URL
   changeVote(party, vote) {
     let p = Array.from(this.state.parties)
     const i = p.findIndex( o => o.party === party)
@@ -660,6 +679,7 @@ class App extends React.Component {
     this.props.history.push(window.location.pathname + "?" + currentUrlParams.toString())
   }
 
+  // Changes all votes to "vote" and updates URL
   changeAllVotes(e, vote) {
     let p = Array.from(this.state.parties)
     let currentUrlParams = new URLSearchParams(window.location.search)
@@ -677,7 +697,7 @@ class App extends React.Component {
     })
   }
 
-
+  // Toggles modal dialog
   toggleDialog(e) {
     e.preventDefault()
     if(e.target === e.currentTarget) {
@@ -689,13 +709,16 @@ class App extends React.Component {
 
   render() {
 
+    // Array of vote changing switches. One for each defined party.
     const switches = this.state.parties.map((o, i) => <Switch key = {i} party = {o.party} translate = {o.party === this.state.dragging ? this.state.switch_translate : 0} seats = {" (" + o.seats + ")"} switchFunc = {this.changeVote} color = {o.color} position = {o.vote} logo = {o.logo} />)
+    // Summary of votes
     const votes = [true, false, null].map(x => this.state.parties.filter(y => y.vote === x).map(o => o.seats).reduce( (a, b) => a + b, 0) )
+    // Reset button. Only renders if at least one vote is casted.
     const button = votes[0] + votes[1] > 0 ? <Button func = {this.changeAllVotes} label = "Reiniciar" icon = "fas fa-undo" /> : <></>
 
     return(
       <>
-        {this.state.dialog ? <div className = "overlay" onClick = {(e) => this.toggleDialog(e)}><ShareDialog title = "Compartir pacto" label = "Usa este link para compartir tu pacto" btn = "Ok" func = {this.toggleDialog}>{window.location.href}</ShareDialog></div> : <></>}
+        {this.state.dialog ? <div className = "overlay" onClick = {(e) => this.toggleDialog(e)}><ShareDialog title = "Compartir pacto" label = "Usa este link para compartir tu pacto" btn = "Ok"><Copiable>{window.location.href}</Copiable><Button label = "Ok" icon = "" func = {this.toggleDialog} /></ShareDialog></div> : <></>}
         <Title text = "Pactómetro" secondary = {"Elecciones generales"} bg = {"espana.jpg"} />
         <div className = "main-frame row">
           <div className = "col-lg-5 col-sm-12 switches">
