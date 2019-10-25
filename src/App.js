@@ -12,7 +12,6 @@ const parties = [
     ideology : 1,
     seats : 123,
     color : "#EF1C27",
-    active : false,
     vote : null,
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Logotipo_del_PSOE.svg/80px-Logotipo_del_PSOE.svg.png"
   },
@@ -22,7 +21,6 @@ const parties = [
     ideology : 8,
     seats : 66,
     color : "#1D84CE",
-    active : false,
     vote : null,
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/PP_icono_2019.svg/80px-PP_icono_2019.svg.png"
   },
@@ -32,7 +30,6 @@ const parties = [
     ideology : 7,
     seats : 57,
     color : "#EB6109",
-    active : false,
     vote : null,
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Ciudadanos_icono_2017.svg/80px-Ciudadanos_icono_2017.svg.png"
   },
@@ -42,7 +39,6 @@ const parties = [
     ideology : 2,
     seats : 42,
     color : "#672F6C",
-    active : false,
     vote : null,
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/UPsimbol.svg/80px-UPsimbol.svg.png"
   },
@@ -52,7 +48,6 @@ const parties = [
     ideology : 9,
     seats : 24,
     color : "#63be21",
-    active : false,
     vote : null,
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/VOX_logo.svg/80px-VOX_logo.svg.png"
   },
@@ -62,7 +57,6 @@ const parties = [
     ideology : 4,
     seats : 15,
     color : "#FFB232",
-    active : false,
     vote : null,
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Esquerra_Republicana_de_Catalunya-Sobiranistes_icono.svg/80px-Esquerra_Republicana_de_Catalunya-Sobiranistes_icono.svg.png"
   },
@@ -72,7 +66,6 @@ const parties = [
     ideology : 5,
     seats : 7,
     color : "#ED5975",
-    active : false,
     vote : null,
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Junts_per_Catalunya.svg/48px-Junts_per_Catalunya.svg.png"
   },
@@ -82,7 +75,6 @@ const parties = [
     ideology : 6,
     seats : 6,
     color : "#008000",
-    active : false,
     vote : null,
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/EAJlogo.svg/60px-EAJlogo.svg.png"
   },
@@ -92,7 +84,6 @@ const parties = [
     ideology : 3,
     seats : 4,
     color : "#b5cf18",
-    active : false,
     vote : null,
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/EHBilduLogoa2.png/44px-EHBilduLogoa2.png"
   },
@@ -102,7 +93,6 @@ const parties = [
     ideology : 6,
     seats : 2,
     color : "#2A52BE",
-    active : false,
     vote : null,
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Logo_Navarra_Suma.png/47px-Logo_Navarra_Suma.png"
   },
@@ -112,7 +102,6 @@ const parties = [
     ideology : 6,
     seats : 2,
     color : "#ffd700",
-    active : false,
     vote : null,
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Coalici%C3%B3n_Canaria.svg/45px-Coalici%C3%B3n_Canaria.svg.png"
   },
@@ -122,7 +111,6 @@ const parties = [
     ideology : 2,
     seats : 1,
     color : "#E65F00",
-    active : false,
     vote : null,
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Comprom%C3%ADs_%28isotip%29.svg/39px-Comprom%C3%ADs_%28isotip%29.svg.png"
   },
@@ -132,7 +120,6 @@ const parties = [
     ideology : 4,
     seats : 1,
     color : "#C2CE0C",
-    active : false,
     vote : null,
     logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Logo_PRC.svg/59px-Logo_PRC.svg.png"
   }
