@@ -2,6 +2,8 @@
 
 En vista de la cada vez más complicada realidad parlamentaria y del éxito generalizado de los pactómetros en prensa digital, he decidido crear un pactómetro en ReactJS. Es totalmente configurable para adaptarse a cualquier aritmética parlamentaria. Además, permite guardar y compartir fácilmente cualquier pacto, ya que almacena los votos en tiempo real en la URL.
 
+Es posible previsualizar el pactómetro con el resultado de las últimas elecciones generales en [Heroku](https://guarded-waters-59432.herokuapp.com/).
+
 ## Variables
 
 - ``parties`` Permite definir, en formato JSON, los partidos existentes en la cámara.
