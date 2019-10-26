@@ -414,7 +414,6 @@ class Switch extends React.Component {
   }
 
   componentWillUnmount() {
-    this.updateSize()
     window.removeEventListener('resize', this.updateSize);
   }
 
