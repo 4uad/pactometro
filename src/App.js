@@ -16,7 +16,7 @@ const parties = [
     seats : 123,
     color : "#EF1C27",
     vote : null,
-    logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Logotipo_del_PSOE.svg/80px-Logotipo_del_PSOE.svg.png"
+    logo : 'psoe.png'
   },
   {
     key : "pp",
@@ -25,7 +25,7 @@ const parties = [
     seats : 66,
     color : "#1D84CE",
     vote : null,
-    logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/PP_icono_2019.svg/80px-PP_icono_2019.svg.png"
+    logo : 'pp.png'
   },
   {
     key : "cs",
@@ -34,7 +34,7 @@ const parties = [
     seats : 57,
     color : "#EB6109",
     vote : null,
-    logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Ciudadanos_icono_2017.svg/80px-Ciudadanos_icono_2017.svg.png"
+    logo : 'cs.png'
   },
   {
     key : "up",
@@ -43,7 +43,7 @@ const parties = [
     seats : 42,
     color : "#672F6C",
     vote : null,
-    logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/UPsimbol.svg/80px-UPsimbol.svg.png"
+    logo : 'up.png'
   },
   {
     key : "vox",
@@ -52,7 +52,7 @@ const parties = [
     seats : 24,
     color : "#63be21",
     vote : null,
-    logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/VOX_logo.svg/80px-VOX_logo.svg.png"
+    logo : 'vox.png'
   },
   {
     key : "erc",
@@ -61,7 +61,7 @@ const parties = [
     seats : 15,
     color : "#FFB232",
     vote : null,
-    logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Esquerra_Republicana_de_Catalunya-Sobiranistes_icono.svg/80px-Esquerra_Republicana_de_Catalunya-Sobiranistes_icono.svg.png"
+    logo : 'erc.png'
   },
   {
     key : "jx",
@@ -70,7 +70,7 @@ const parties = [
     seats : 7,
     color : "#ED5975",
     vote : null,
-    logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Junts_per_Catalunya.svg/48px-Junts_per_Catalunya.svg.png"
+    logo : 'jxc.png'
   },
   {
     key : "pnv",
@@ -79,7 +79,7 @@ const parties = [
     seats : 6,
     color : "#008000",
     vote : null,
-    logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/EAJlogo.svg/60px-EAJlogo.svg.png"
+    logo : 'eaj.png'
   },
   {
     key : "ehb",
@@ -88,7 +88,7 @@ const parties = [
     seats : 4,
     color : "#b5cf18",
     vote : null,
-    logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/EHBilduLogoa2.png/44px-EHBilduLogoa2.png"
+    logo : "ehb.png"
   },
   {
     key : "ns",
@@ -97,7 +97,7 @@ const parties = [
     seats : 2,
     color : "#2A52BE",
     vote : null,
-    logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/Logo_Navarra_Suma.png/47px-Logo_Navarra_Suma.png"
+    logo : "ns.png"
   },
   {
     key : "cc",
@@ -106,7 +106,7 @@ const parties = [
     seats : 2,
     color : "#ffd700",
     vote : null,
-    logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Coalici%C3%B3n_Canaria.svg/45px-Coalici%C3%B3n_Canaria.svg.png"
+    logo : "cc.png"
   },
   {
     key : "com",
@@ -115,7 +115,7 @@ const parties = [
     seats : 1,
     color : "#E65F00",
     vote : null,
-    logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Comprom%C3%ADs_%28isotip%29.svg/39px-Comprom%C3%ADs_%28isotip%29.svg.png"
+    logo : "com.png"
   },
   {
     key : "prc",
@@ -124,7 +124,7 @@ const parties = [
     seats : 1,
     color : "#C2CE0C",
     vote : null,
-    logo : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Logo_PRC.svg/59px-Logo_PRC.svg.png"
+    logo : "prc.png"
   }
 ]
 
@@ -469,9 +469,11 @@ class Switch extends React.Component {
       backgroundColor : this.props.color
     }
 
+    console.log(this.props.logo)
+
     let styleBtn = {
       borderColor : this.props.color,
-      backgroundImage : "url(" + this.props.logo + ")",
+      backgroundImage : `url(${require(`./static/${this.props.logo}`)})`,
       transition: "transform " + this.state.transition + "s"
     }
 
@@ -541,7 +543,7 @@ class Count extends React.Component {
   render() {
     const votes = [this.props.yes, this.props.neutral, this.props.no];
     const names = ["Sí", "Abstención", "No"];
-    const count = votes.map( (v, i) => <div className = "result-component" key = {i}><span>{names[i]}</span><div>{v}</div>{v > 0 ? <div className = "tool-tip">{this.props.parties.filter(o => o.vote === (i === 0 ? true : (i === 1 ? null : false))).map((p, j) => <div key = {j} className = "switch-btn" style = {{borderColor: p.color, backgroundImage: "url(" + p.logo + ")"}} />)}</div> : <></>}</div>)
+    const count = votes.map( (v, i) => <div className = "result-component" key = {i}><span>{names[i]}</span><div>{v}</div>{v > 0 ? <div className = "tool-tip">{this.props.parties.filter(o => o.vote === (i === 0 ? true : (i === 1 ? null : false))).map((p, j) => <div key = {j} className = "switch-btn" style = {{borderColor: p.color, backgroundImage: "url(" + require('./static/' + p.logo) + ")"}} />)}</div> : <></>}</div>)
     // Checks if there's simple (1) or absolute majority (0), or none (2)
     const resultid = votes[0] / votes.reduce((a,b) => a+b) > .5 ?  0 : (votes[0] > votes[2] ?  1 : 2)
     const results = [<>Mayoría<br />absoluta<br /><span role="img" aria-label="Hay mayoría absoluta">🤝</span></>, <>Mayoría<br />simple<br /><span role ="img" aria-label="Hay mayoría simple">🤝</span></>, <>Sin<br />mayoría<br /><span role="img" aria-label="No hay mayorías">👎</span></>]
