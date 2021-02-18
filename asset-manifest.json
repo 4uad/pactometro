@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/pactometro/static/css/main.9e9b37e2.chunk.css",
+    "main.js": "/pactometro/static/js/main.4a7d1802.chunk.js",
+    "main.js.map": "/pactometro/static/js/main.4a7d1802.chunk.js.map",
+    "runtime-main.js": "/pactometro/static/js/runtime-main.b6dc5cc3.js",
+    "runtime-main.js.map": "/pactometro/static/js/runtime-main.b6dc5cc3.js.map",
+    "static/js/2.0643c813.chunk.js": "/pactometro/static/js/2.0643c813.chunk.js",
+    "static/js/2.0643c813.chunk.js.map": "/pactometro/static/js/2.0643c813.chunk.js.map",
+    "index.html": "/pactometro/index.html",
+    "precache-manifest.459a4afcf7829640ee81d8da1762e4cd.js": "/pactometro/precache-manifest.459a4afcf7829640ee81d8da1762e4cd.js",
+    "service-worker.js": "/pactometro/service-worker.js",
+    "static/css/main.9e9b37e2.chunk.css.map": "/pactometro/static/css/main.9e9b37e2.chunk.css.map",
+    "static/media/eaj.png": "/pactometro/static/media/eaj.02b82122.png"
+  }
+}
