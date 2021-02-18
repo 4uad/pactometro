@@ -459,7 +459,7 @@ body, .main-title .secondary-title {
   font-family: Nunito, sans-serif
 }
 
-@media max-width 768px {
+@media (max-width: 768px) {
   .count {
     margin-top: -25vw
   }
